@@ -1,0 +1,90 @@
+runner_cfg:
+  seed: 114513
+  output_dir: results/MICCAI/few-shot/2-shot/5e-5/version_1
+  optimizer_and_scheduler_cfg:
+    param_dict_cfg:
+      lr_prompt_learner_context: 0.0
+      lr_prompt_learner_ranks: 0.0
+      lr_image_encoder: 5.0e-05
+      lr_text_encoder: 5.0e-05
+      lr_image_adapter: 0.0
+      lr_sigma: 0.0
+      lr_mlp: 0.0
+      lr_attention_layer: 5.0e-05
+      lr_project_v: 0.0
+      lr_project_t: 0.0
+      lr_project: 0.0
+      lr_logit_scale: 0.0
+      staged_lr_image_encoder:
+        new_layers: []
+        base_lr_mult: 1.0
+        new_lr_mult: 1.0
+    optimizer_cfg:
+      optimizer_name: radam
+      lr: 0.0001
+      weight_decay: 0.0
+      momentum: 0.9
+      sgd_dampening: 0.0
+      sgd_nesterov: false
+      rmsprop_alpha: 0.99
+      adam_beta1: 0.9
+      adam_beta2: 0.999
+      staged_lr: null
+      lookahead: false
+    lr_scheduler_cfg:
+      lr_scheduler_name: cosine
+      stepsize:
+      - 60
+      gamma: 0.1
+      max_epochs: 100
+      warmup_epoch: 0
+      warmup_cons_lr: 1.0e-05
+      warmup_min_lr: 1.0e-05
+      warmup_type: constant
+      warmup_recount: true
+  load_weights_cfg:
+    init_model_weights: null
+    init_prompt_learner_weights: null
+    init_image_encoder_weights: null
+    init_text_encoder_weights: null
+    init_projector_v_weights: null
+    init_projector_t_weights: null
+  loss_weights:
+    ce_loss: 1.0
+    kl_loss: 1.0
+    reg_loss: 1.0
+    rank_loss: 1.0
+    dist_loss: 1.0
+  model_cfg:
+    type: EchoCLIP
+    prompt_learner_cfg:
+      type: PlainPromptLearner
+      num_ranks: 5
+      num_base_ranks: 3
+      num_tokens_per_rank: 10
+      num_context_tokens: 10
+      rank_tokens_position: tail
+      init_rank_path: datasets/classnames_num.txt
+      init_context: THE LEFT VENTRICULAR EJECTION FRACTION IS ESTIMATED TO BE
+      rank_specific_context: false
+      interpolation_type: linear
+data_cfg:
+  train_dataloder_cfg:
+    num_workers: 4
+    batch_size: 2
+    shuffle: true
+  eval_dataloder_cfg:
+    num_workers: 4
+    batch_size: 2
+    shuffle: false
+trainer_cfg:
+  max_epochs: 100
+  precision: 16
+  accelerator: gpu
+  devices: 1
+  check_val_every_n_epoch: 1
+  num_sanity_val_steps: 1
+  fast_dev_run: false
+test_only: false
+config:
+- default.yaml
