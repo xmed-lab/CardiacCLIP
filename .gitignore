@@ -1,0 +1,41 @@
+# python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# builds & logs
+dist/
+build/
+logs/
+wandb/
+runs/
+outputs/
+results/
+*.ckpt
+
+# datasets / artifacts / checkpoints / videos
+data/
+checkpoints/
+*.pt
+*.pth
+*.ckpt
+*.npz
+*.npy
+*.tar
+*.tar.gz
+*.zip
+*.7z
+*.mp4
+*.avi
+*.mov
+
+# env
+.venv/
+env/
+venv/
+
+
+
+
+*.ckpt
+results/
