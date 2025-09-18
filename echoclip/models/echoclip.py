@@ -212,7 +212,6 @@ class LayerNormConv2d(nn.Module):
 class VideoFeatureAggregator(nn.Module):
     def __init__(self, feature_dim, hidden_dim):
         super(VideoFeatureAggregator, self).__init__()
-        # 注意力机制中的全连接层
         self.attention = nn.Sequential(
             nn.Linear(feature_dim, hidden_dim),
             nn.Tanh(),
@@ -220,7 +219,6 @@ class VideoFeatureAggregator(nn.Module):
             nn.Tanh(),
             nn.Linear(hidden_dim, 1)
         )
-        # 用于聚合特征的线性层
 
 
         self.feature_aggregation = nn.Sequential(

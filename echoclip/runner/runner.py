@@ -169,16 +169,12 @@ class Runner(pl.LightningModule):
         y_label = self.num2label_fine(y)
         logits_prompt = logits
 
-  
-        # losses["rank_loss"] = torch.from_numpy(np.zeros(1)).to(y.device)
 
       
         losses["ce_loss"] = self.ce_loss_func(logits_prompt, y_label) 
         losses["kl_loss"] = self.compute_kl_loss(logits_prompt, y_label) 
         losses["reg_loss"] = (torch.abs(predictions-y)).mean() 
 
-
-        # losses["dist_loss"] =  torch.from_numpy(np.zeros(1)).to(logits.device)
        
 
         wandb.log({"ce_loss": losses["ce_loss"], "kl_loss":losses["kl_loss"],"reg_loss":losses["reg_loss"]})
@@ -213,7 +209,6 @@ class Runner(pl.LightningModule):
         y_t = F.one_hot(y, self.num_ranks).t()
         y_t_row_ind = y_t.sum(-1) > 0
         num_slots = y_t_row_ind.sum()
-        # .softmax函数将tensor的每个元素都缩放到(0,1)之间，且和为1.
         y_t_reduction = (y_t * 10.0).softmax(-1)
 
         y_t_reduction[y_t_row_ind <= 0] = 0
